@@ -1,3 +1,4 @@
+# Terraform Block: https://developer.hashicorp.com/terraform/language/settings 
 terraform {
   required_version = ">= 1.3.0"
   required_providers {
@@ -8,6 +9,8 @@ terraform {
   }
 }
 
+# Provider Block: https://developer.hashicorp.com/terraform/language/providers
+# AWS: https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 provider "aws" {
   region     = "us-east-2"
   access_key = var.access_key
@@ -20,17 +23,22 @@ provider "aws" {
   }
 }
 
+
+# Resources Block: https://developer.hashicorp.com/terraform/language/resources
+# random_string: https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
 resource "random_string" "random" {
   length  = 6
   special = false
   upper   = false
 }
 
+# aws_s3_bucket: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
 resource "aws_s3_bucket" "terraform_lab" {
   bucket        = "${var.name}-${random_string.random.result}"
   force_destroy = true
 }
 
+# aws_s3_bucket_website_configuration: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration
 resource "aws_s3_bucket_website_configuration" "terraform_lab" {
   bucket = aws_s3_bucket.terraform_lab.bucket
   index_document {
@@ -41,6 +49,7 @@ resource "aws_s3_bucket_website_configuration" "terraform_lab" {
   }
 }
 
+# aws_s3_bucket_public_access_block: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block
 resource "aws_s3_bucket_public_access_block" "public_access_block" {
   bucket                  = aws_s3_bucket.terraform_lab.id
   block_public_acls       = false
@@ -49,6 +58,8 @@ resource "aws_s3_bucket_public_access_block" "public_access_block" {
   restrict_public_buckets = false
 }
 
+# templatefile: https://developer.hashicorp.com/terraform/language/functions/templatefile
+# aws_s3_bucket_policy: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy
 resource "aws_s3_bucket_policy" "terraform_lab" {
   bucket = aws_s3_bucket.terraform_lab.id
   policy = templatefile("s3-policy.json",
@@ -57,7 +68,9 @@ resource "aws_s3_bucket_policy" "terraform_lab" {
     }
   )
 }
-
+# fileset: https://developer.hashicorp.com/terraform/language/functions/fileset
+# filemd5: https://developer.hashicorp.com/terraform/language/functions/filemd5
+# aws_s3_object: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object
 resource "aws_s3_object" "upload_object" {
   for_each     = fileset("html/", "*")
   bucket       = aws_s3_bucket.terraform_lab.id
