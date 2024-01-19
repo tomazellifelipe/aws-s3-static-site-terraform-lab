@@ -8,6 +8,11 @@ variable "secret_key" {
   description = "aws secret key"
   sensitive   = true
 }
+variable "token" {
+  type        = string
+  description = "aws session token"
+  sensitive   = true
+}
 variable "name" {
   type        = string
   description = "Default name for resources"
