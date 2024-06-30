@@ -1,0 +1,11 @@
+name: Lint
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  scans:
+      uses: tomazellifelipe/tflint-checkov-actions/.github/workflows/iac-validation.yaml@main
