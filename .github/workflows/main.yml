@@ -21,4 +21,3 @@ jobs:
         repository-projects: read
         statuses: read
         security-events: read
-        id-token: read
