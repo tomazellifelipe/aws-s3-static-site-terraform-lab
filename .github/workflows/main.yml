@@ -9,3 +9,5 @@ on:
 jobs:
   scans:
       uses: tomazellifelipe/tflint-checkov-actions/.github/workflows/iac-validation.yaml@main
+      permissions:
+        actions: read
