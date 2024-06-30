@@ -11,3 +11,14 @@ jobs:
       uses: tomazellifelipe/tflint-checkov-actions/.github/workflows/iac-validation.yaml@main
       permissions:
         actions: read
+        attestations: read
+        checks: read
+        deployments: read
+        discussions: read
+        issues: read
+        pages: read
+        pull-requests: read
+        repository-projects: read
+        statuses: read
+        security-events: read
+        id-token: read
