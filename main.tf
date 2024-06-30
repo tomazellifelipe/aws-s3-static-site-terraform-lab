@@ -6,6 +6,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3"
+    }
   }
 }
 
@@ -19,7 +23,6 @@ provider "aws" {
   default_tags {
     tags = {
       Owner = "felipe.tomazelli"
-      Cost  = "terraform-lab"
     }
   }
 }
